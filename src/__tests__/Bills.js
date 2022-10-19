@@ -2,13 +2,15 @@
  * @jest-environment jsdom
  */
 
-import {screen, waitFor} from "@testing-library/dom"
+import {fireEvent, screen, waitFor} from "@testing-library/dom"
+import '@testing-library/jest-dom/extend-expect'
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import { ROUTES_PATH} from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
-
+import Bill from "../containers/Bills.js"
 import router from "../app/Router.js";
+import userEvent from "@testing-library/user-event";
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -26,7 +28,7 @@ describe("Given I am connected as an employee", () => {
       await waitFor(() => screen.getByTestId('icon-window'))
       const windowIcon = screen.getByTestId('icon-window')
       //to-do write expect expression
-
+      expect(windowIcon.getAttribute('class')).toContain('active-icon')
     })
     test("Then bills should be ordered from earliest to latest", () => {
       document.body.innerHTML = BillsUI({ data: bills })
@@ -34,6 +36,22 @@ describe("Given I am connected as an employee", () => {
       const antiChrono = (a, b) => ((a < b) ? 1 : -1)
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
+    })
+    test("The eye icon should display the bill image", async () =>{
+      const store = null;
+      const bill = new Bill({
+        document,
+        onNavigate,
+        store,
+        localStorage: window.localStorage,
+      });
+      const eyeBtn = screen.getAllByTestId('icon-eye')[0]
+      $.fn.modal = jest.fn();
+      const handleClickIconEye = jest.fn(() => bill.handleClickIconEye(eyeBtn));
+      eyeBtn.addEventListener("click", handleClickIconEye);
+      fireEvent.click(eyeBtn)
+      await waitFor(() => {screen.getAllByTestId("billImage")})
+      expect(screen.getAllByTestId("billImage")[0]).toBeVisible()
     })
   })
 })

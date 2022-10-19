@@ -23,7 +23,8 @@ export default class {
   handleClickIconEye = (icon) => {
     const billUrl = icon.getAttribute("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
-    $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
+    //added dataTestId
+    $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" data-testid="billImage" /></div>`)
     $('#modaleFile').modal('show')
   }
 
@@ -33,7 +34,6 @@ export default class {
       .bills()
       .list()
       .then(snapshot => {        
-        console.log(snapshot);
         const bills = snapshot
           .map(doc => {
             
