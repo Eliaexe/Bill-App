@@ -9,7 +9,6 @@ import NewBill from "../containers/NewBill.js"
 import {localStorageMock} from "../__mocks__/localStorage.js"
 import { ROUTES, ROUTES_PATH } from "../constants/routes"
 
-
 describe("Given I am connected as an employee", () => {
   beforeAll(() => {
     Object.defineProperty(window, "localStorage", { value: localStorageMock });
@@ -42,6 +41,13 @@ describe("Given I am connected as an employee", () => {
       const form = screen.getByTestId('form-new-bill')
       const handleSubmit = jest.fn((e) => billNew.handleSubmit(e))
       form.addEventListener('submit', handleSubmit)
+
+      fireEvent.submit(form)
+      expect(form).toBeTruthy()
+      })
+    });
+    describe('when i fill up the form whit the right data', () => {
+      test('it should display the "Bills page" whit the new bill', ()=>{
       // const formElements = {
       //   type: screen.getByTestId('expense-type').value,
       //   name:  screen.getByTestId('expense-name').value,
@@ -52,11 +58,7 @@ describe("Given I am connected as an employee", () => {
       //   commentary: screen.getByTestId('commentary').value,
       //   file: screen.getByTestId('file'),
       // }
-
-
-      fireEvent.submit(form)
-      expect(form).toBeTruthy()
       })
-    });
+    })
   })
 })
