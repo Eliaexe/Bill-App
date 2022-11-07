@@ -295,7 +295,8 @@ describe("Given I am a user connected as Admin", () => {
           list : () =>  {
             return Promise.reject(new Error("Erreur 500"))
           }
-        }})
+        }
+      })
 
       window.onNavigate(ROUTES_PATH.Dashboard)
       await new Promise(process.nextTick);

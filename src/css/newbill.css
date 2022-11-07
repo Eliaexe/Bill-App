@@ -37,6 +37,14 @@ label {
   color: #fff;
 }
 
+.ok-input{
+  border: solid 2px green !important;
+}
+
+.error-input {
+  border: solid 2px red !important; 
+}
+
 #btn-send-bill {
   width: 100px;
   background-color: #0E5AE5;

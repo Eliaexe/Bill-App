@@ -5,7 +5,11 @@ import LoadingPage from "./LoadingPage.js"
 import Actions from './Actions.js'
 
 const row = (bill) => {
-  return (`
+  if (bill.type != null || 
+      bill.name != null || 
+      bill.amount != null || 
+      bill.status != undefined) {
+    return (`
     <tr>
       <td>${bill.type}</td>
       <td>${bill.name}</td>
@@ -17,7 +21,8 @@ const row = (bill) => {
       </td>
     </tr>
     `)
-  }
+  }  
+}
 
   // added sort algo in printing process
 const rows = (data) => {
