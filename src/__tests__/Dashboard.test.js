@@ -12,6 +12,7 @@ import { localStorageMock } from "../__mocks__/localStorage.js"
 import mockStore from "../__mocks__/store"
 import { bills } from "../fixtures/bills"
 import router from "../app/Router"
+import '@testing-library/jest-dom/extend-expect'
 // the s of Store wasn't Uppercase
 jest.mock("../app/Store", () => mockStore)
 
@@ -77,6 +78,10 @@ describe('Given I am connected as an Admin', () => {
       expect(handleShowTickets1).toHaveBeenCalled()
       await waitFor(() => screen.getByTestId(`open-bill47qAXb6fIm2zOKkLzMro`) )
       expect(screen.getByTestId(`open-bill47qAXb6fIm2zOKkLzMro`)).toBeTruthy()
+
+      userEvent.click(icon1)
+      expect(document.getElementById("open-bill47qAXb6fIm2zOKkLzMro")).not.toBeInTheDocument()
+
       icon2.addEventListener('click', handleShowTickets2)
       userEvent.click(icon2)
       expect(handleShowTickets2).toHaveBeenCalled()
@@ -87,7 +92,13 @@ describe('Given I am connected as an Admin', () => {
       userEvent.click(icon3)
       expect(handleShowTickets3).toHaveBeenCalled()
       await waitFor(() => screen.getByTestId(`open-billBeKy5Mo4jkmdfPGYpTxZ`) )
+      await waitFor(() => document.getElementById('status-bills-container1') )
+      
       expect(screen.getByTestId(`open-billBeKy5Mo4jkmdfPGYpTxZ`)).toBeTruthy()
+      expect(document.getElementById('status-bills-container1')).toBeTruthy()
+
+
+      
     })
   })
 
@@ -219,13 +230,14 @@ describe('Given I am connected as Admin and I am on Dashboard page and I clicked
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Admin'
       }))
-      document.body.innerHTML = DashboardFormUI(bills[0])
+      const html = DashboardFormUI(bills[0])
+      document.body.innerHTML = html
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }
-      const store = null
+      const firestore = null
       const dashboard = new Dashboard({
-        document, onNavigate, store, bills, localStorage: window.localStorage
+        document, onNavigate, firestore, bills, localStorage: window.localStorage
       })
 
       const handleClickIconEye = jest.fn(dashboard.handleClickIconEye)
@@ -240,7 +252,7 @@ describe('Given I am connected as Admin and I am on Dashboard page and I clicked
   })
 })
 
-// test d'intégration GET
+// test GET
 describe("Given I am a user connected as Admin", () => {
   describe("When I navigate to Dashboard", () => {
     test("fetches bills from mock API GET", async () => {
@@ -307,4 +319,3 @@ describe("Given I am a user connected as Admin", () => {
 
   })
 })
-

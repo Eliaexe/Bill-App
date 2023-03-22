@@ -122,5 +122,4 @@ describe("Given I am connected as an employee", () => {
       expect(corruptedData).toEqual('LOL corrupted LOL')
     })
   })
-
 })

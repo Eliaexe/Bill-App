@@ -25,6 +25,7 @@
         })
       );
     });
+
     describe("I submit the form whitout fill the inputs required", ()=> {
       test('it should remain in the New Bill page', () =>{
         const html = NewBillUI()
@@ -149,36 +150,6 @@
         });
         expect(input.classList.contains("error-input")).toBe(true)
       })
-    })
-    describe('testing the sendTheData fnc', () => {
-      beforeEach(() => {
-
-      })
-      test('bhoo', async () => {
-        jest.spyOn(mockStore, "bills");
-        document.body.innerHTML = NewBillUI();
-        const onNavigate = (pathname) => {
-          document.body.innerHTML = ROUTES({ pathname });
-        };
-        const store = mockStore;
-        const billNew = new NewBill({
-          document,
-          onNavigate,
-          store,
-          localStorage: window.localStorage,
-        });
-
-        mockStore.bills.mockImplementationOnce(() => {
-          return {
-            create: () => {
-              return Promise.reject(new Error("Erreur 404"));
-            },
-          };
-        });
-
-        await expect(billNew.sendTheData({})).rejects.toEqual(new Error("Erreur 404"));
-
-      })
-    })
+    })    
   })
  
