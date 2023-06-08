@@ -113,3 +113,8 @@ tr td:nth-of-type(5) {
 .bill-proof-container {
   overflow: scroll;
 }
+
+/* display the bill in correct way */
+.modal-body img {
+  width: 100%;
+}

@@ -14,7 +14,6 @@ export const filteredBills = (data, status) => {
       if (typeof jest !== 'undefined') {
         selectCondition = (bill.status === status)
       }
-      /* istanbul ignore next */
       else {
         // in prod environment
         const userEmail = JSON.parse(localStorage.getItem("user")).email
@@ -145,7 +144,7 @@ export default class {
       this.counter ++
     }
 
-    //changed the loop becouse it was returning multiple eventListener
+    // Bug Hunt 4 - changed the loop becouse it was returning multiple eventListener
     let billsDisplayed = document.getElementById(`status-bills-container${this.index}`).children
     for (let i = 0; i < billsDisplayed.length; i++) {
       const el = billsDisplayed[i];
@@ -183,7 +182,6 @@ export default class {
   }
 
   // not need to cover this function by tests
-  /* istanbul ignore next */
   updateBill = (bill) => {
     if (this.store) {
     return this.store

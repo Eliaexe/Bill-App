@@ -25,6 +25,7 @@ export default class NewBill {
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
+    // Bug hunt 3
     if (fileName.includes('.gif') || fileName.includes('.png') || fileName.includes('jpeg') || fileName.includes('jpg') ) {
       input.classList.add('ok-input')
       this.sendTheData(formData, e.target.value, fileName)
@@ -34,7 +35,6 @@ export default class NewBill {
   }
 
   sendTheData = (data, url , name) => {
-    // console.log(this.store);
     this.store
     .bills()
     .create({
@@ -44,7 +44,6 @@ export default class NewBill {
       }
     })
     .then(({key}) => {
-      // console.log(url);
       this.billId = key
       this.fileUrl = url
       this.fileName = name
@@ -56,7 +55,6 @@ export default class NewBill {
 
   handleSubmit = e => {
     e.preventDefault()
-    // console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(localStorage.getItem("user")).email
     const bill = {
       email,

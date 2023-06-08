@@ -23,9 +23,20 @@ export default class {
   handleClickIconEye = (icon) => {
     const billUrl = icon.getAttribute("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
+
     //added dataTestId
-    $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" data-testid="billImage" /></div>`)
-    $('#modaleFile').modal('show')
+    // Bug Hunt 3 - afficher l'image
+    if (billUrl.includes('null') === false) {
+      $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container">
+        <img width=${imgWidth} src=${billUrl} alt="Bill" data-testid="billImage" /></div>`)
+      $('#modaleFile').modal('show')
+    } else if (billUrl.includes('null') === true) {
+      const message = "Veuillez contacter l'administrateur pour insérer et vérifier la facture."
+      $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container">
+      <h3>${message}</h3></div>`)
+      $('#modaleFile').modal('show')
+    }
+
   }
 
   getBills = () => {

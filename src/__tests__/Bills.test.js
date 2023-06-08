@@ -92,13 +92,10 @@ describe("Given I am connected as an employee", () => {
         store,
         localStorage: window.localStorage,
       });
-      // const handlegetBills = jest.fn(() => )
       const originalData = bill.getBills().then(x => {
-        // console.log(x[0].date , x[0].id);
         return x[0].date
       })
       const formattedData = await mockedBills.bills().list().then(x => {
-        // console.log(x[0].date , x[0].id);
         return x[0].date
       })
       expect(originalData.toString()).toMatch(/[^A-Za-z0-9]+/)
@@ -116,7 +113,6 @@ describe("Given I am connected as an employee", () => {
         localStorage: window.localStorage,
       });
       const corruptedData = await bill.getBills().then(x => {
-        // console.log(x[0].date , x[0].id);
         return x[0].date
       })
       expect(corruptedData).toEqual('LOL corrupted LOL')

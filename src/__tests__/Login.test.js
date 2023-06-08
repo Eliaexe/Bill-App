@@ -98,40 +98,6 @@ describe("Given that I am a user on login page", () => {
 });
 
 describe("Given that I am a user on login page", () => {
-  // test('handleSubmitAdmin calls createUser on login rejection', () => {
-  //   document.body.innerHTML = LoginUI();
-  //   const mockStore = {
-  //     login: jest.fn().mockRejectedValue(new Error('login error')),
-  //     users: jest.fn(),
-  //   }
-  //   const login = new Login({
-  //     document: document,
-  //     localStorage: localStorage,
-  //     onNavigate: jest.fn(),
-  //     PREVIOUS_LOCATION: '',
-  //     store: mockStore,
-  //   })
-  //   const form = document.createElement('form')
-  //   form.setAttribute('data-testid', 'form-admin')
-  //   const emailInput = document.createElement('input')
-  //   emailInput.setAttribute('data-testid', 'admin-email-input')
-  //   emailInput.value = 'admin@example.com'
-  //   const passwordInput = document.createElement('input')
-  //   passwordInput.setAttribute('data-testid', 'admin-password-input')
-  //   passwordInput.value = 'password'
-  //   form.appendChild(emailInput)
-  //   form.appendChild(passwordInput)
-  //   const event = new Event('submit')
-  //   form.dispatchEvent(event)
-  //   expect(mockStore.login).toHaveBeenCalledWith(
-  //     JSON.stringify({
-  //       email: 'admin@example.com',
-  //       password: 'password',
-  //     })
-  //   )
-  //   expect(mockStore.users).not.toHaveBeenCalled()
-  //   expect(login.PREVIOUS_LOCATION).toBe('')
-  // })
   describe("When i am the admin and i click on the submit button without filling the form", () => {
     test("Then It should renders Login page", () => {
       document.body.innerHTML = LoginUI();
@@ -221,10 +187,4 @@ describe("Given that I am a user on login page", () => {
       );
     });
   });
-
-  describe('Login class', () => {
-    describe('login method', () => {
-
-    })
-  })
 });

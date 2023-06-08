@@ -24,7 +24,7 @@ const row = (bill) => {
   }  
 }
 
-  // added sort algo in printing process
+  // Bug Hunt 1 - added sort algo in printing process
 const rows = (data) => {
   return (data && data.length) ? data.sort((a, b) => new Date(b.date) - new Date(a.date))
   .map(bill => row(bill)).join("") : ""
