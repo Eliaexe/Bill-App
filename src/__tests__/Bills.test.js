@@ -118,4 +118,45 @@ describe("Given I am connected as an employee", () => {
       expect(corruptedData).toEqual('LOL corrupted LOL')
     })
   })
+
+  describe("When an error occurs on API", () => {
+    beforeEach(() => {
+      jest.spyOn(mockedBills, "bills");
+    });
+  
+    test("should fetch bills from API and handle 404 error", async () => {
+      mockedBills.bills.mockImplementationOnce(() => ({
+        list: () => Promise.reject(new Error("Erreur 404")),
+      }));
+  
+      let response;
+  
+      try {
+        response = await mockedBills.bills().list();
+      } catch (error) {
+        response = error;
+      }
+  
+      document.body.innerHTML = BillsUI({ error: response });
+      expect(screen.getByText(/Erreur 404/)).toBeTruthy();
+    });
+  
+    test("should fetch bills from API and handle 500 error", async () => {
+      mockedBills.bills.mockImplementationOnce(() => ({
+        list: () => Promise.reject(new Error("Erreur 500")),
+      }));
+  
+      let response;
+  
+      try {
+        response = await mockedBills.bills().list();
+      } catch (error) {
+        response = error;
+      }
+  
+      document.body.innerHTML = BillsUI({ error: response });
+      expect(screen.getByText(/Erreur 500/)).toBeTruthy();
+    });
+  });
+  
 })
