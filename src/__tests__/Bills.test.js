@@ -119,14 +119,20 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
-  describe("When an error occurs on API", () => {
+  describe("API Error Handling", () => {
     beforeEach(() => {
       jest.spyOn(mockedBills, "bills");
     });
   
-    test("should fetch bills from API and handle 404 error", async () => {
+    test("Fetches bills from an API and fails with a 404 error message", async () => {
       mockedBills.bills.mockImplementationOnce(() => ({
-        list: () => Promise.reject(new Error("Erreur 404")),
+        list: async () => {
+          try {
+            return await Promise.reject(new Error("Error 404"));
+          } catch (error) {
+            throw error;
+          }
+        },
       }));
   
       let response;
@@ -138,16 +144,21 @@ describe("Given I am connected as an employee", () => {
       }
   
       document.body.innerHTML = BillsUI({ error: response });
-      expect(screen.getByText(/Erreur 404/)).toBeTruthy();
+      expect(screen.getByText(/Error 404/)).toBeTruthy();
     });
   
-    test("should fetch bills from API and handle 500 error", async () => {
+    test("Fetches messages from an API and fails with a 500 error message", async () => {
       mockedBills.bills.mockImplementationOnce(() => ({
-        list: () => Promise.reject(new Error("Erreur 500")),
+        list: async () => {
+          try {
+            return await Promise.reject(new Error("Error 500"));
+          } catch (error) {
+            throw error;
+          }
+        },
       }));
   
       let response;
-  
       try {
         response = await mockedBills.bills().list();
       } catch (error) {
@@ -155,7 +166,7 @@ describe("Given I am connected as an employee", () => {
       }
   
       document.body.innerHTML = BillsUI({ error: response });
-      expect(screen.getByText(/Erreur 500/)).toBeTruthy();
+      expect(screen.getByText(/Error 500/)).toBeTruthy();
     });
   });
   
